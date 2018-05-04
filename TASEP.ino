@@ -1,6 +1,6 @@
 #include <DHT.h>
 
-#define DHTPIN 7     // what pin we're connected to
+#define DHTPIN 6     // what pin we're connected to
 #define DHTTYPE DHT11   // DHT 22  (AM2302)
 DHT dht(DHTPIN, DHTTYPE); //// Initialize DHT sensor for normal 16mhz Arduino
 
@@ -51,7 +51,7 @@ void setup() {
 
   Serial.print("Initializing SD card...");
 
-  if (!SD.begin(5)) {
+  if (!SD.begin(10)) {
     Serial.println("initialization failed!");
     return;
   }

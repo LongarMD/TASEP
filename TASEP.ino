@@ -1,13 +1,18 @@
-#include <DHT.h>
+//#include <DHT.h>
 
-#define DHTPIN 6     // what pin we're connected to
-#define DHTTYPE DHT11   // DHT 22  (AM2302)
-DHT dht(DHTPIN, DHTTYPE); //// Initialize DHT sensor for normal 16mhz Arduino
+//#define DHTPIN 6     // what pin we're connected to
+//#define DHTTYPE DHT11   // DHT 22  (AM2302)
+//DHT dht(DHTPIN, DHTTYPE); //// Initialize DHT sensor for normal 16mhz Arduino
 
 //Variables
-int chk;
-float hum;  //Stores humidity value
-float temp; //Stores temperature value
+//int chk;
+//float hum;  //Stores humidity value
+//float temp; //Stores temperature value
+
+// LEDs
+long red;
+long green;
+long blue;
 
 
 #include <SPI.h>
@@ -34,13 +39,21 @@ void setup() {
 
   pinMode(battery, INPUT);
   
+  pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);
+  pinMode(A3, OUTPUT);
+  
+  red = 255;
+  green = 0;
+  blue = 255;
+  
   Serial.begin(9600);
 
 //--------------
   lastNow = millis();
   Time = 0;
 
-  dht.begin();
+  //dht.begin();
 
   
   // Open serial communications and wait for port to open:
@@ -67,6 +80,13 @@ void setup() {
 }
 
 void loop() {
+  
+   analogWrite(A1, red);
+   analogWrite(A2, green);
+   analogWrite(A3, blue);
+   red=rand()*255;
+   green=rand()*255;
+   blue=rand()*255;  
   ch1 = pulseIn(button, HIGH);
   Serial.println(analogRead(battery)/205.0);
 
@@ -107,10 +127,10 @@ void loop() {
      myFile = SD.open("tasep.txt", FILE_WRITE);
     if (myFile) {
       
-      hum = dht.readHumidity();
-      temp= dht.readTemperature();
+      //hum = dht.readHumidity();
+      //temp= dht.readTemperature();
 
-      myFile.println(String(temp) + " " + String(hum) + " " + String(ch1));
+      //myFile.println(String(temp) + " " + String(hum) + " " + String(ch1));
       
       myFile.close();
       Serial.println("Writing to file done");
